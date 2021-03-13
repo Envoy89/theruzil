@@ -11,6 +11,9 @@ services:
     image: traefik:v2.2
     container_name: traefik
     restart: unless-stopped
+    networks:
+      - internal
+      - web
     security_opt:
       - no-new-privileges:true
     ports:
@@ -23,6 +26,7 @@ services:
       - ./data/acme.json:/acme.json
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=web"
       - "traefik.http.routers.traefik.entrypoints=https"
       - "traefik.http.routers.traefik.rule=Host(`traefik.theruzil.com`)"
       - "traefik.http.routers.traefik.tls=true"
@@ -42,6 +46,7 @@ services:
     container_name: blog-api
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=web"
       - "traefik.http.routers.traefik.entrypoints=https"
       - "traefik.http.routers.traefik.rule=Host(`theruzil.com/blog`)"
       - "traefik.http.routers.traefik.tls=true"
@@ -51,6 +56,8 @@ services:
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
   blog-db:
     image: mongo
+    networks:
+      - internal
     ports:
       - "27017:27017"
     container_name: blog-db
