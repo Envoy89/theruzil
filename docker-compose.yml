@@ -1,4 +1,11 @@
 version: '3'
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false
+
 services:
   traefik:
     image: traefik:v2.2
@@ -22,3 +29,30 @@ services:
       - "traefik.http.routers.traefik.tls.certresolver=letsEncrypt"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.services.traefik-traefik.loadbalancer.server.port=888"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$apr1$$wgi80/PG$$jJqgq2i0QdR7l7MYw3BxA0"
+      - "traefik.http.routers.traefik.middlewares=traefik-auth"
+  blog-api:
+    image: envoy89/myworstblog:0.0.2
+    networks:
+      - internal
+      - web
+    depends_on:
+        - blog-db
+    container_name: blog-api
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entrypoints=https"
+      - "traefik.http.routers.traefik.rule=Host(`theruzil.com/blog`)"
+      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.http.routers.traefik.tls.certresolver=letsEncrypt"
+      - "traefik.http.routers.traefik.service=blog-db"
+      - "traefik.http.services.traefik-traefik.loadbalancer.server.port=8884"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+  blog-db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: blog-db
+    labels:
+      - "traefik.enable=false"
