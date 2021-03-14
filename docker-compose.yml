@@ -1,10 +1,9 @@
 version: '3'
 
 networks:
-  web:
+  traefik-net:
     external: true
-  internal:
-    external: false
+  db-net:
 
 services:
   traefik:
@@ -12,8 +11,9 @@ services:
     container_name: traefik
     restart: unless-stopped
     networks:
-      - internal
-      - web
+      traefik-net:
+        aliases:
+          - traefik.theruzil.com
     security_opt:
       - no-new-privileges:true
     ports:
@@ -26,7 +26,7 @@ services:
       - ./data/acme.json:/acme.json
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=web"
+      - "traefik.docker.network=traefik-net"
       - "traefik.http.routers.traefik.entrypoints=https"
       - "traefik.http.routers.traefik.rule=Host(`traefik.theruzil.com`)"
       - "traefik.http.routers.traefik.tls=true"
@@ -38,15 +38,15 @@ services:
       - "traefik.http.routers.traefik.middlewares=traefik-auth"
   blog-api:
     image: envoy89/myworstblog:0.0.2
-    networks:
-      - internal
-      - web
-    depends_on:
-        - blog-db
     container_name: blog-api
+    networks:
+      - traefik-net
+      - db-net
+    depends_on:
+      - blog-db
     labels:
       - "traefik.enable=true"
-      - "traefik.docker.network=web"
+      - "traefik.docker.network=traefik-net"
       - "traefik.http.routers.traefik.entrypoints=https"
       - "traefik.http.routers.traefik.rule=Host(`theruzil.com/blog`)"
       - "traefik.http.routers.traefik.tls=true"
@@ -56,10 +56,8 @@ services:
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
   blog-db:
     image: mongo
-    networks:
-      - internal
-    ports:
-      - "27017:27017"
     container_name: blog-db
+    networks:
+      - db-net
     labels:
       - "traefik.enable=false"
