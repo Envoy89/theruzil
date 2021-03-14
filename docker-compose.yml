@@ -47,11 +47,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-net"
-      - "traefik.http.routers.traefik.entrypoints=https"
-      - "traefik.http.routers.traefik.rule=Host(`theruzil.com/blog`)"
-      - "traefik.http.routers.traefik.tls=true"
-      - "traefik.http.routers.traefik.tls.certresolver=letsEncrypt"
-      - "traefik.http.routers.traefik.service=blog-db"
+      - "traefik.http.routers.blog-api.entrypoints=https"
+      - "traefik.http.routers.blog-api.rule=Host(`theruzil.com/blog`)"
+      - "traefik.http.routers.blog-api.tls=true"
+      - "traefik.http.routers.blog-api.tls.certresolver=letsEncrypt"
+      - "traefik.http.routers.blog-api.service=blog-db"
       - "traefik.http.services.traefik-traefik.loadbalancer.server.port=8884"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
   blog-db:
