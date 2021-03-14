@@ -9,9 +9,9 @@ http:
     http-catchall:
       rule: hostregexp(`{host:.+}`)
       entrypoints:
-      - http
+        - web
       middlewares:
-      - redirect-to-https
+        - redirect-to-https
   middlewares:
     redirect-to-https:
       redirectScheme:
