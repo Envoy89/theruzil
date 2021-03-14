@@ -42,10 +42,10 @@ services:
     depends_on:
       - blog-db
     labels:
-       - "traefik.enable=true"
+      - "traefik.enable=true"
       - "traefik.docker.network=traefik-net"
       - "traefik.http.routers.blog-api.entrypoints=https"
-      - "traefik.http.routers.blog-api.rule=Host(`api.theruzil.com`)"
+      - "traefik.http.routers.blog-api.rule=Host(`blog.theruzil.com`)"
       - "traefik.http.routers.blog-api.tls=true"
       - "traefik.http.routers.blog-api.tls.certresolver=letsEncrypt"
       - "traefik.port=3000"
