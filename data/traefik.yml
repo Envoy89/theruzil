@@ -16,7 +16,7 @@ http:
     redirect-to-https:
       redirectScheme:
         scheme: https
-        permanent: false
+        permanent: true
 
 providers:
   docker:
@@ -35,8 +35,3 @@ certificatesResolvers:
 
 api:
   dashboard: true
-
-log:
-  filePath: "./logs/logs.log"
-  format: json
-  level: DEBUG

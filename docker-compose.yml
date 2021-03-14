@@ -11,9 +11,7 @@ services:
     container_name: traefik
     restart: unless-stopped
     networks:
-      traefik-net:
-        aliases:
-          - traefik.theruzil.com
+      - traefik-net
     security_opt:
       - no-new-privileges:true
     ports:
@@ -33,7 +31,6 @@ services:
       - "traefik.http.routers.traefik.tls.certresolver=letsEncrypt"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.services.traefik-traefik.loadbalancer.server.port=888"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$apr1$$wgi80/PG$$jJqgq2i0QdR7l7MYw3BxA0"
       - "traefik.http.routers.traefik.middlewares=traefik-auth"
   blog-api:
@@ -45,15 +42,13 @@ services:
     depends_on:
       - blog-db
     labels:
-      - "traefik.enable=true"
+       - "traefik.enable=true"
       - "traefik.docker.network=traefik-net"
       - "traefik.http.routers.blog-api.entrypoints=https"
-      - "traefik.http.routers.blog-api.rule=Host(`theruzil.com/blog`)"
+      - "traefik.http.routers.blog-api.rule=Host(`api.theruzil.com`)"
       - "traefik.http.routers.blog-api.tls=true"
       - "traefik.http.routers.blog-api.tls.certresolver=letsEncrypt"
-      - "traefik.http.routers.blog-api.service=blog-db"
-      - "traefik.http.services.traefik-traefik.loadbalancer.server.port=8884"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.port=3000"
   blog-db:
     image: mongo
     container_name: blog-db
