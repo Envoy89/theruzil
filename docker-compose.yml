@@ -1,58 +1,22 @@
 version: '3'
 
-networks:
-  traefik-net:
-    external: true
-  db-net:
-
 services:
-  traefik:
-    image: traefik:v2.2
-    container_name: traefik
-    restart: unless-stopped
-    networks:
-      - traefik-net
-    security_opt:
-      - no-new-privileges:true
+  reverse:
+    container_name: reverse
+    hostname: reverse
+    image: theruzilproxy
     ports:
       - 80:80
-      - 443:443 
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./data/traefik.yml:/traefik.yml:ro
-      - ./data/acme.json:/acme.json
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=traefik-net"
-      - "traefik.http.routers.traefik.entrypoints=https"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.theruzil.com`)"
-      - "traefik.http.routers.traefik.tls=true"
-      - "traefik.http.routers.traefik.tls.certresolver=letsEncrypt"
-      - "traefik.http.routers.traefik.service=api@internal"
-      - "traefik.http.services.traefik-traefik.loadbalancer.server.port=888"
-      - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$apr1$$wgi80/PG$$jJqgq2i0QdR7l7MYw3BxA0"
-      - "traefik.http.routers.traefik.middlewares=traefik-auth"
-  blog-api:
+      - 443:443
+  api:
     image: envoy89/myworstblog:0.0.2
-    container_name: blog-api
-    networks:
-      - traefik-net
-      - db-net
+    ports:
+      - "3000:3000"
     depends_on:
-      - blog-db
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=traefik-net"
-      - "traefik.http.routers.blog-api.entrypoints=https"
-      - "traefik.http.routers.blog-api.rule=Host(`blog.theruzil.com`)"
-      - "traefik.http.routers.blog-api.tls=true"
-      - "traefik.http.routers.blog-api.tls.certresolver=letsEncrypt"
-      - "traefik.port=3000"
-  blog-db:
+      - db
+    container_name: blog-api
+  db:
     image: mongo
+    ports:
+      - "27017:27017"
     container_name: blog-db
-    networks:
-      - db-net
-    labels:
-      - "traefik.enable=false"
