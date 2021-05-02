@@ -4,7 +4,7 @@ services:
   reverse:
     container_name: reverse
     hostname: reverse
-    image: envoy89/theruzilproxy
+    image: envoy89/theruzilproxy  
     ports:
       - 80:80
       - 443:443
