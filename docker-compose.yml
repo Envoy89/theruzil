@@ -16,7 +16,7 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      - blog-db
     networks:
       - app-network
   webserver:
@@ -31,7 +31,7 @@ services:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
     depends_on:
-      - nodejs
+      - blog
     networks:
       - app-network
   certbot:
