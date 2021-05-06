@@ -1,22 +1,60 @@
 version: '3'
 
 services:
-  reverse:
-    container_name: reverse
-    hostname: reverse
-    image: envoy89/theruzilproxy  
+  blog-db:
+    image: mongo
+    container_name: blog-db
+    restart: unless-stopped
     ports:
-      - 80:80
-      - 443:443
-  api:
+      - "27017:27017"
+    networks:
+      - app-network
+  blog:
     image: envoy89/myworstblog:0.0.2
+    container_name: blog
+    restart: unless-stopped
     ports:
       - "3000:3000"
     depends_on:
       - db
-    container_name: blog-api
-  db:
-    image: mongo
+    networks:
+      - app-network
+  webserver:
+    image: nginx:mainline-alpine 
+    container_name: webserver
+    restart: unless-stopped
     ports:
-      - "27017:27017"
-    container_name: blog-db
+      - 80:80
+    volumes:
+      - web-root:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+    depends_on:
+      - nodejs
+    networks:
+      - app-network
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - webserver
+    command: certonly --webroot --webroot-path=/var/www/html --email ruzil33@gmail.com --agree-tos --no-eff-email --staging -d theruzil.com  -d www.theruzil.com
+
+volumes:
+  certbot-etc:
+  certbot-var:
+  web-root:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./site/html
+      o: bind
+
+networks:
+  app-network:
+    driver: bridge
