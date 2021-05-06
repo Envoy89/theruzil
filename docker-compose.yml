@@ -54,7 +54,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: ./site/html
+      device: /root/theruzil/site/html
       o: bind
   dhparam:
     driver: local
