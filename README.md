@@ -24,7 +24,7 @@
 4. Настроить автообновление сертификатов
     1. chmod +x /root/theruzil/ssl_renew.sh
     2. sudo crontab -e
-        1. Добавить строки 0 12 * * * /home/sammy/node_project/ssl_renew.sh >> /var/log/cron.log 2>&1
+        1. Добавить строки 0 12 * * * /root/theruzil/ssl_renew.sh >> /var/log/cron.log 2>&1
 
 ## Обновление и перезапуск
 
