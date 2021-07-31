@@ -17,9 +17,13 @@
     2. cd /root/
     3. git clone https://github.com/Envoy89/theruzil.git
 2. Переименовать nginx.conf в nginx_new.conf и nginx_first.conf в nginx.conf
+    1. mv nginx.conf nginx_new.conf
+    2. mv nginx_first.conf nginx.conf
 3. Запустить все приложения
     1. docker-compose up -d
 4. Переименовать nginx_new.conf в nginx.conf
+    1. mv nginx.conf nginx_first.conf
+    2. mv nginx_new.conf nginx.conf
 5. Создать ключ Diffie-Hellman
     1. mkdir /root/theruzil/dhparam/
     2. sudo openssl dhparam -out /root/theruzil/dhparam/dhparam-2048.pem 2048
