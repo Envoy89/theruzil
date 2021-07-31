@@ -1,0 +1,76 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    width: 100%;
+    height: 100%;
+}
+
+.leftBar {
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    width: 250px;
+    overflow: auto;
+}
+
+.myFoto {
+    border-radius: 100px;
+    border: 3px solid green;
+    box-shadow: 0 0 7px #666;
+    width: 150px;
+    height: 150px;
+    margin-left: 35px;
+    margin-top: 30px;
+    margin-bottom: 25px;
+}
+
+.myName {
+    font-size: 26px;
+    line-height: 1.25;
+    margin-left: 25px;
+    margin-bottom: 25px;
+}
+
+.link {
+    padding-left: 25px;
+    margin-bottom: 10px;
+}
+
+.linkName {
+    display: inline;
+    width: 50%;
+}
+
+.linkInfo {
+    display: inline;
+}
+
+.mainInfo {
+    margin-left: 250px;
+    padding: 1px 16px;
+    background-color: aquamarine;
+    height: 100%;
+    overflow: auto;
+}
+
+.aboutMe {
+    margin-top: 15px;
+}
+
+.projects {
+    margin-top: 15px;
+}
+
+.project {
+    margin-top: 15px;
+}
+
+.projectName {
+    font-weight: bold;
+}
