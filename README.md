@@ -41,3 +41,6 @@
     2. git pull
 2. Перезапустить изменившийся контейнер
     1. docker-compose up -d --force-recreate --no-deps "service_name"
+
+## Локальный запуск
+1. docker-compose -f docker-compose.local.yml up -d
