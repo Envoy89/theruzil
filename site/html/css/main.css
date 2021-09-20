@@ -73,7 +73,9 @@ html, body {
 
 .description {
     font-size: 22px;
-    display:flex; align-items:center;
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
 }
 
 .projects {
