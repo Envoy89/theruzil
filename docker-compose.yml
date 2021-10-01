@@ -10,8 +10,12 @@ services:
     networks:
       - app-network
   blog:
-    image: envoy89/myworstblog:0.0.2
+    image: envoy89/myworstblog:0.0.7
     container_name: blog
+    environment:
+      - DB_USER=${DB_USER}
+      - USER_PASSWORD=${USER_PASSWORD}
+      - BaseHtmlUrl=${BaseHtmlUrl}
     restart: unless-stopped
     ports:
       - "3000:3000"
