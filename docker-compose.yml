@@ -10,7 +10,7 @@ services:
     networks:
       - app-network
   blog:
-    image: envoy89/myworstblog:0.0.7
+    image: envoy89/myworstblog:0.0.9
     container_name: blog
     environment:
       - DB_USER=${DB_USER}
