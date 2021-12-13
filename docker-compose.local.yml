@@ -5,6 +5,8 @@ services:
     image: mongo
     container_name: blog-db
     restart: unless-stopped
+    volumes:
+      - ./mongo-blog-db-volume:/data/db
     ports:
       - "27017:27017"
     networks:
