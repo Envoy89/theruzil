@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  blog-db:
+    image: mongo:5.0.1
+    container_name: blog-db
+    restart: unless-stopped
+    volumes:
+      - ./.mongo-blog-db-volume:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+  blog:
+    image: envoy89/myworstblog:0.0.9
+    container_name: blog
+    environment:
+      - DB_USER=${DB_USER}
+      - USER_PASSWORD=${USER_PASSWORD}
+      - BaseHtmlUrl=${BaseHtmlUrl}
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - blog-db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
