@@ -26,7 +26,7 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email ruzil33@gmail.com --agree-tos --no-eff-email --force-renewal -d theruzil.com  -d www.theruzil.com
+    command: certonly --webroot --webroot-path=/var/www/html --email ruzil33@gmail.com --agree-tos --no-eff-email --force-renewal -d theruzil.com  -d www.theruzil.com -d drone.theruzil.com -d www.drone.theruzil.com
 
 volumes:
   certbot-etc:
