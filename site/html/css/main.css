@@ -1,46 +1,46 @@
 html, body {
-    height: 100%;
     margin: 0;
     padding: 0;
 }
 
 #root {
     width: 100%;
-    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 100vh;
 }
 
-.leftBar {
+/* menu styles */
+
+.menu {
     margin: 0;
     padding: 0;
     background-color: #f1f1f1;
-    position: fixed;
     height: 100%;
-    width: 250px;
     overflow: auto;
+    width: 10%;
 }
 
 .myFoto {
-    border-radius: 100px;
+    border-radius: 50%;
     border: 3px solid green;
     box-shadow: 0 0 7px #666;
-    width: 200px;
-    height: 200px;
-    margin-left: 20px;
-    margin-top: 30px;
-    margin-bottom: 25px;
+    width: 80%;
+    margin: 15px 0 5px 9%;
 }
 
 .myName {
-    font-size: 27px;
+    font-size: 1.18vw;
     line-height: 1.25;
-    margin-left: 25px;
+    margin-left: 9%;
     margin-bottom: 25px;
 }
 
 .link {
-    padding-left: 25px;
+    margin-left: 9%;
     margin-bottom: 10px;
-    font-size: 19px;
+    font-size: 1vw;
 }
 
 .linkName {
@@ -52,12 +52,13 @@ html, body {
     display: inline;
 }
 
+/* main info styles */
+
 .mainInfo {
-    margin-left: 250px;
     padding: 1px 16px;
     background-color: white;
-    height: 100%;
     overflow: auto;
+    width: 90%;
 }
 
 .aboutMe {
@@ -67,14 +68,17 @@ html, body {
 .aboutMe .description {
     padding: 15px;
     border: 1px solid #d0d7de;
-    border-radius: 6px;
-    box-shadow: 6px 6px #f1f1f1;
+    border-radius: 0.2vw;
+    box-shadow: 0.2vw 0.2vw #f1f1f1;
+}
+
+.blockInfo {
+    font-size: 1vw;
 }
 
 .description {
-    font-size: 22px;
-    display: flex; 
-    align-items: center;
+    font-size: 1vw;
+    display: flex;
     justify-content: space-between;
 }
 
@@ -83,27 +87,101 @@ html, body {
 }
 
 .project {
-    margin-top: 15px;
+    margin-top: 1vw;
     padding: 0 15px 15px 15px;
     border: 1px solid #d0d7de;
-    border-radius: 6px;
-    box-shadow: 6px 6px #f1f1f1;
+    border-radius: 0.2vw;
+    box-shadow: 0.2vw 0.2vw #f1f1f1;
+}
+
+.projects:last-child {
+    margin-bottom: 1vw;
 }
 
 .projectName {
-    font-weight: bold;
+    font-size: 1vw;
+}
+
+.descriptionWithImg {
+    white-space: pre-line;
+}
+
+.projectImage {
+    width: 35%;
+}
+
+.projectImage img {
+    width: 100%;
 }
 
 .projectLink {
     margin-top: 10px;
+    font-size: 1vw;
 }
 
-.projectFoto {
-    width: 200px;
-}
+@media only screen
+and (max-width:480px)  {
+    #root {
+        flex-direction: column-reverse;
+    }
 
-/* .descriptionWithImg {
-    width: calc(100% - 200px);
-    vertical-align: top;
-    display: inline;
-} */
+    .menu {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        font-size: 14px;
+        height: auto;
+        overflow: visible;
+    }
+
+    .myName {
+        font-size: 12px;
+        overflow: hidden;
+        margin: 0 0 0 15px;
+    }
+
+    .myFoto {
+        display: none;
+    }
+
+    .myLinks {
+        display: flex;
+    }
+
+    .link {
+        font-size: 12px;
+        overflow: hidden;
+        margin: 0;
+    }
+
+    .description, .blockInfo, .projectLink, .projectName {
+        font-size: 14px;
+    }
+
+    .description {
+        flex-direction: column;
+    }
+
+    .aboutMe .description {
+        border-radius: 6px;
+        box-shadow: 6px 6px #f1f1f1;
+    }
+
+    .descriptionWithImg {
+        margin-bottom: 15px;
+    }
+
+    .projects:last-child {
+        margin-bottom: 15px;
+    }
+
+    .project {
+        margin-top: 15px;
+        border-radius: 6px;
+        box-shadow: 6px 6px #f1f1f1;
+    }
+
+    .projectImage {
+        width: 100%;
+    }
+}
